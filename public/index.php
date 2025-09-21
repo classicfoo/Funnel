@@ -350,7 +350,7 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Companies</h2>
-                            <a href="?view=companies_form" class="button">Add company</a>
+                            <a href="?view=companies_form" class="button primary">Add company</a>
                         </div>
                         <div class="table">
                             <div class="table-head">
@@ -374,7 +374,6 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Add company</h2>
-                            <a href="?view=companies" class="button secondary">Back to companies</a>
                         </div>
                         <form method="post" class="form-grid">
                             <input type="hidden" name="action" value="add_company">

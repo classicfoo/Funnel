@@ -248,6 +248,15 @@ button:active {
     transition: background 0.2s ease, color 0.2s ease, transform 0.1s ease, border-color 0.2s ease;
 }
 
+.button.primary {
+    padding: 0.7rem 1.2rem;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
+}
+
+.card-header .button {
+    margin: 0.25rem 0;
+}
+
 .button:hover {
     background: #1d4ed8;
 }
