@@ -350,10 +350,7 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Companies</h2>
-                            <a href="?view=companies_form" class="button primary with-icon">
-                                <span class="icon" aria-hidden="true">+</span>
-                                <span>Add Company</span>
-                            </a>
+                            <a href="?view=companies_form" class="button">Add company</a>
                         </div>
                         <div class="table">
                             <div class="table-head">
@@ -372,30 +369,13 @@ if ($currentUser) {
                                 <div class="table-row muted">No companies yet.</div>
                             <?php endif; ?>
                         </div>
-                        <form method="post" class="form-grid">
-                            <input type="hidden" name="action" value="add_company">
-                            <label>
-                                <span>Name</span>
-                                <input type="text" name="name" required>
-                            </label>
-                            <label>
-                                <span>Industry</span>
-                                <input type="text" name="industry">
-                            </label>
-                            <label>
-                                <span>Website</span>
-                                <input type="url" name="website">
-                            </label>
-                            <label>
-                                <span>Phone</span>
-                                <input type="text" name="phone">
-                            </label>
-                            <button type="submit">Create</button>
-                        </form>
                     </section>
                 <?php elseif ($view === 'companies_form'): ?>
-                    <section class="card card-form">
-                        <h2>Add Company</h2>
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Add company</h2>
+                            <a href="?view=companies" class="button secondary">Back to companies</a>
+                        </div>
                         <form method="post" class="form-grid">
                             <input type="hidden" name="action" value="add_company">
                             <label>
@@ -421,10 +401,7 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Contacts</h2>
-                            <a href="?view=contacts_form" class="button with-icon">
-                                <span class="icon" aria-hidden="true">+</span>
-                                <span>Add Contact</span>
-                            </a>
+                            <a href="?view=contacts_form" class="button">Add contact</a>
                         </div>
                         <div class="table">
                             <div class="table-head">
@@ -445,47 +422,13 @@ if ($currentUser) {
                                 <div class="table-row muted">No contacts yet.</div>
                             <?php endif; ?>
                         </div>
-                        <form method="post" class="form-grid">
-                            <input type="hidden" name="action" value="add_contact">
-                            <label>
-                                <span>First name</span>
-                                <input type="text" name="first_name" required>
-                            </label>
-                            <label>
-                                <span>Last name</span>
-                                <input type="text" name="last_name" required>
-                            </label>
-                            <label>
-                                <span>Email</span>
-                                <input type="email" name="email">
-                            </label>
-                            <label>
-                                <span>Phone</span>
-                                <input type="text" name="phone">
-                            </label>
-                            <label>
-                                <span>Position</span>
-                                <input type="text" name="position">
-                            </label>
-                            <label>
-                                <span>Company</span>
-                                <select name="company_id">
-                                    <option value="">Unassigned</option>
-                                    <?php foreach ($companies as $company): ?>
-                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <button type="submit">Save</button>
-                        </form>
                     </section>
                 <?php elseif ($view === 'contacts_form'): ?>
-                    <section class="card card-form">
-                        <a href="?view=contacts" class="button ghost with-icon back-link">
-                            <span class="icon" aria-hidden="true">←</span>
-                            <span>Back to Contacts</span>
-                        </a>
-                        <h2>Add Contact</h2>
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Add contact</h2>
+                            <a href="?view=contacts" class="button secondary">Back to contacts</a>
+                        </div>
                         <form method="post" class="form-grid">
                             <input type="hidden" name="action" value="add_contact">
                             <label>
@@ -524,10 +467,7 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Deals</h2>
-                            <a href="?view=deals_form" class="button with-icon">
-                                <span class="icon" aria-hidden="true">+</span>
-                                <span>Add Deal</span>
-                            </a>
+                            <a href="?view=deals_form" class="button">Create deal</a>
                         </div>
                         <div class="table">
                             <div class="table-head">
@@ -560,56 +500,13 @@ if ($currentUser) {
                                 <div class="table-row muted">No deals yet.</div>
                             <?php endif; ?>
                         </div>
-                        <form method="post" class="form-grid">
-                            <input type="hidden" name="action" value="add_deal">
-                            <label>
-                                <span>Name</span>
-                                <input type="text" name="name" required>
-                            </label>
-                            <label>
-                                <span>Stage</span>
-                                <select name="stage">
-                                    <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
-                                        <option value="<?= $stageOption ?>"><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Value</span>
-                                <input type="number" step="0.01" name="value">
-                            </label>
-                            <label>
-                                <span>Expected close</span>
-                                <input type="date" name="close_date">
-                            </label>
-                            <label>
-                                <span>Company</span>
-                                <select name="company_id">
-                                    <option value="">Unassigned</option>
-                                    <?php foreach ($companies as $company): ?>
-                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Primary contact</span>
-                                <select name="contact_id">
-                                    <option value="">Unassigned</option>
-                                    <?php foreach ($contacts as $contact): ?>
-                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <button type="submit">Create deal</button>
-                        </form>
                     </section>
                 <?php elseif ($view === 'deals_form'): ?>
-                    <section class="card card-form">
-                        <a href="?view=deals" class="button ghost with-icon back-link">
-                            <span class="icon" aria-hidden="true">←</span>
-                            <span>Back to Deals</span>
-                        </a>
-                        <h2>Add Deal</h2>
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Create deal</h2>
+                            <a href="?view=deals" class="button secondary">Back to deals</a>
+                        </div>
                         <form method="post" class="form-grid">
                             <input type="hidden" name="action" value="add_deal">
                             <label>
@@ -657,10 +554,7 @@ if ($currentUser) {
                     <section class="card">
                         <div class="card-header">
                             <h2>Activities</h2>
-                            <a href="?view=activities_form" class="button with-icon">
-                                <span class="icon" aria-hidden="true">+</span>
-                                <span>Add Activity</span>
-                            </a>
+                            <a href="?view=activities_form" class="button">Log activity</a>
                         </div>
                         <div class="table">
                             <div class="table-head">
@@ -689,56 +583,13 @@ if ($currentUser) {
                                 <div class="table-row muted">No activities yet.</div>
                             <?php endif; ?>
                         </div>
-                        <form method="post" class="form-grid">
-                            <input type="hidden" name="action" value="add_activity">
-                            <label>
-                                <span>Type</span>
-                                <select name="type">
-                                    <?php foreach (['call','email','meeting','note'] as $typeOption): ?>
-                                        <option value="<?= $typeOption ?>"><?= ucfirst($typeOption) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Subject</span>
-                                <input type="text" name="subject">
-                            </label>
-                            <label>
-                                <span>Notes</span>
-                                <textarea name="content" rows="4"></textarea>
-                            </label>
-                            <label>
-                                <span>Deal</span>
-                                <select name="deal_id">
-                                    <option value="">None</option>
-                                    <?php foreach ($deals as $deal): ?>
-                                        <option value="<?= $deal['deal_id'] ?>"><?= e($deal['name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Contact</span>
-                                <select name="contact_id">
-                                    <option value="">None</option>
-                                    <?php foreach ($contacts as $contact): ?>
-                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Date</span>
-                                <input type="datetime-local" name="activity_date">
-                            </label>
-                            <button type="submit">Log activity</button>
-                        </form>
                     </section>
                 <?php elseif ($view === 'activities_form'): ?>
-                    <section class="card card-form">
-                        <a href="?view=activities" class="button ghost with-icon back-link">
-                            <span class="icon" aria-hidden="true">←</span>
-                            <span>Back to Activities</span>
-                        </a>
-                        <h2>Add Activity</h2>
+                    <section class="card">
+                        <div class="card-header">
+                            <h2>Log activity</h2>
+                            <a href="?view=activities" class="button secondary">Back to activities</a>
+                        </div>
                         <form method="post" class="form-grid">
                             <input type="hidden" name="action" value="add_activity">
                             <label>
