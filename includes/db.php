@@ -4,6 +4,13 @@ declare(strict_types=1);
 function get_database_connection(): PDO
 {
     $dbPath = __DIR__ . '/../database/crm.sqlite';
+    $dbDir = dirname($dbPath);
+    if (!is_dir($dbDir)) {
+        if (!mkdir($dbDir, 0775, true) && !is_dir($dbDir)) {
+            throw new RuntimeException(sprintf('Failed to create database directory: %s', $dbDir));
+        }
+    }
+
     $needsInitialization = !file_exists($dbPath);
 
     $pdo = new PDO('sqlite:' . $dbPath);
