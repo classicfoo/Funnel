@@ -85,7 +85,8 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .card-header h2 {
@@ -249,12 +250,12 @@ button:active {
 }
 
 .button.primary {
-    padding: 0.7rem 1.2rem;
+    padding: 0.8rem 1.35rem;
     box-shadow: 0 10px 20px rgba(37, 99, 235, 0.18);
 }
 
 .card-header .button {
-    margin: 0.25rem 0;
+    margin: 0.25rem 0 0.75rem;
 }
 
 .button:hover {
