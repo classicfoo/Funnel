@@ -299,10 +299,10 @@ if ($currentUser) {
             <?php else: ?>
                 <nav class="tabs">
                     <a href="?view=dashboard" class="<?= $view === 'dashboard' ? 'active' : '' ?>">Dashboard</a>
-                    <a href="?view=companies" class="<?= $view === 'companies' ? 'active' : '' ?>">Companies</a>
-                    <a href="?view=contacts" class="<?= $view === 'contacts' ? 'active' : '' ?>">Contacts</a>
-                    <a href="?view=deals" class="<?= $view === 'deals' ? 'active' : '' ?>">Deals</a>
-                    <a href="?view=activities" class="<?= $view === 'activities' ? 'active' : '' ?>">Activities</a>
+                    <a href="?view=companies" class="<?= in_array($view, ['companies', 'companies_form'], true) ? 'active' : '' ?>">Companies</a>
+                    <a href="?view=contacts" class="<?= in_array($view, ['contacts', 'contacts_form'], true) ? 'active' : '' ?>">Contacts</a>
+                    <a href="?view=deals" class="<?= in_array($view, ['deals', 'deals_form'], true) ? 'active' : '' ?>">Deals</a>
+                    <a href="?view=activities" class="<?= in_array($view, ['activities', 'activities_form'], true) ? 'active' : '' ?>">Activities</a>
                 </nav>
 
                 <?php if ($view === 'dashboard'): ?>
@@ -347,271 +347,307 @@ if ($currentUser) {
                         </div>
                     </section>
                 <?php elseif ($view === 'companies'): ?>
-                    <section class="split">
-                        <div class="card">
+                    <section class="card">
+                        <div class="card-header">
                             <h2>Companies</h2>
-                            <div class="table">
-                                <div class="table-head">
-                                    <span>Name</span>
-                                    <span>Industry</span>
-                                    <span>Phone</span>
-                                </div>
-                                <?php foreach ($companies as $company): ?>
-                                    <div class="table-row">
-                                        <span><?= e($company['name']) ?></span>
-                                        <span><?= e($company['industry'] ?? '—') ?></span>
-                                        <span><?= e($company['phone'] ?? '—') ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php if (!$companies): ?>
-                                    <div class="table-row muted">No companies yet.</div>
-                                <?php endif; ?>
+                            <a href="?view=companies_form" class="button with-icon">
+                                <span class="icon" aria-hidden="true">+</span>
+                                <span>Add Company</span>
+                            </a>
+                        </div>
+                        <div class="table">
+                            <div class="table-head">
+                                <span>Name</span>
+                                <span>Industry</span>
+                                <span>Phone</span>
                             </div>
+                            <?php foreach ($companies as $company): ?>
+                                <div class="table-row">
+                                    <span><?= e($company['name']) ?></span>
+                                    <span><?= e($company['industry'] ?? '—') ?></span>
+                                    <span><?= e($company['phone'] ?? '—') ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!$companies): ?>
+                                <div class="table-row muted">No companies yet.</div>
+                            <?php endif; ?>
                         </div>
-                        <div class="card">
-                            <h2>Add company</h2>
-                            <form method="post" class="form-grid">
-                                <input type="hidden" name="action" value="add_company">
-                                <label>
-                                    <span>Name</span>
-                                    <input type="text" name="name" required>
-                                </label>
-                                <label>
-                                    <span>Industry</span>
-                                    <input type="text" name="industry">
-                                </label>
-                                <label>
-                                    <span>Website</span>
-                                    <input type="url" name="website">
-                                </label>
-                                <label>
-                                    <span>Phone</span>
-                                    <input type="text" name="phone">
-                                </label>
-                                <button type="submit">Create</button>
-                            </form>
-                        </div>
+                    </section>
+                <?php elseif ($view === 'companies_form'): ?>
+                    <section class="card card-form">
+                        <a href="?view=companies" class="button ghost with-icon back-link">
+                            <span class="icon" aria-hidden="true">←</span>
+                            <span>Back to Companies</span>
+                        </a>
+                        <h2>Add Company</h2>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_company">
+                            <label>
+                                <span>Name</span>
+                                <input type="text" name="name" required>
+                            </label>
+                            <label>
+                                <span>Industry</span>
+                                <input type="text" name="industry">
+                            </label>
+                            <label>
+                                <span>Website</span>
+                                <input type="url" name="website">
+                            </label>
+                            <label>
+                                <span>Phone</span>
+                                <input type="text" name="phone">
+                            </label>
+                            <button type="submit">Create</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'contacts'): ?>
-                    <section class="split">
-                        <div class="card">
+                    <section class="card">
+                        <div class="card-header">
                             <h2>Contacts</h2>
-                            <div class="table">
-                                <div class="table-head">
-                                    <span>Name</span>
-                                    <span>Company</span>
-                                    <span>Email</span>
-                                    <span>Phone</span>
-                                </div>
-                                <?php foreach ($contacts as $contact): ?>
-                                    <div class="table-row">
-                                        <span><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></span>
-                                        <span><?= e($contact['company_name'] ?? '—') ?></span>
-                                        <span><?= e($contact['email'] ?? '—') ?></span>
-                                        <span><?= e($contact['phone'] ?? '—') ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php if (!$contacts): ?>
-                                    <div class="table-row muted">No contacts yet.</div>
-                                <?php endif; ?>
+                            <a href="?view=contacts_form" class="button with-icon">
+                                <span class="icon" aria-hidden="true">+</span>
+                                <span>Add Contact</span>
+                            </a>
+                        </div>
+                        <div class="table">
+                            <div class="table-head">
+                                <span>Name</span>
+                                <span>Company</span>
+                                <span>Email</span>
+                                <span>Phone</span>
                             </div>
+                            <?php foreach ($contacts as $contact): ?>
+                                <div class="table-row">
+                                    <span><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></span>
+                                    <span><?= e($contact['company_name'] ?? '—') ?></span>
+                                    <span><?= e($contact['email'] ?? '—') ?></span>
+                                    <span><?= e($contact['phone'] ?? '—') ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!$contacts): ?>
+                                <div class="table-row muted">No contacts yet.</div>
+                            <?php endif; ?>
                         </div>
-                        <div class="card">
-                            <h2>Add contact</h2>
-                            <form method="post" class="form-grid">
-                                <input type="hidden" name="action" value="add_contact">
-                                <label>
-                                    <span>First name</span>
-                                    <input type="text" name="first_name" required>
-                                </label>
-                                <label>
-                                    <span>Last name</span>
-                                    <input type="text" name="last_name" required>
-                                </label>
-                                <label>
-                                    <span>Email</span>
-                                    <input type="email" name="email">
-                                </label>
-                                <label>
-                                    <span>Phone</span>
-                                    <input type="text" name="phone">
-                                </label>
-                                <label>
-                                    <span>Position</span>
-                                    <input type="text" name="position">
-                                </label>
-                                <label>
-                                    <span>Company</span>
-                                    <select name="company_id">
-                                        <option value="">Unassigned</option>
-                                        <?php foreach ($companies as $company): ?>
-                                            <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <button type="submit">Save</button>
-                            </form>
-                        </div>
+                    </section>
+                <?php elseif ($view === 'contacts_form'): ?>
+                    <section class="card card-form">
+                        <a href="?view=contacts" class="button ghost with-icon back-link">
+                            <span class="icon" aria-hidden="true">←</span>
+                            <span>Back to Contacts</span>
+                        </a>
+                        <h2>Add Contact</h2>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_contact">
+                            <label>
+                                <span>First name</span>
+                                <input type="text" name="first_name" required>
+                            </label>
+                            <label>
+                                <span>Last name</span>
+                                <input type="text" name="last_name" required>
+                            </label>
+                            <label>
+                                <span>Email</span>
+                                <input type="email" name="email">
+                            </label>
+                            <label>
+                                <span>Phone</span>
+                                <input type="text" name="phone">
+                            </label>
+                            <label>
+                                <span>Position</span>
+                                <input type="text" name="position">
+                            </label>
+                            <label>
+                                <span>Company</span>
+                                <select name="company_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($companies as $company): ?>
+                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <button type="submit">Save</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'deals'): ?>
-                    <section class="split">
-                        <div class="card">
+                    <section class="card">
+                        <div class="card-header">
                             <h2>Deals</h2>
-                            <div class="table">
-                                <div class="table-head">
-                                    <span>Name</span>
-                                    <span>Company</span>
-                                    <span>Stage</span>
-                                    <span>Value</span>
-                                    <span>Assigned</span>
-                                </div>
-                                <?php foreach ($deals as $deal): ?>
-                                    <div class="table-row">
-                                        <span><?= e($deal['name']) ?></span>
-                                        <span><?= e($deal['company_name'] ?? '—') ?></span>
-                                        <span>
-                                            <form method="post" class="inline-form">
-                                                <input type="hidden" name="action" value="update_deal_stage">
-                                                <input type="hidden" name="deal_id" value="<?= $deal['deal_id'] ?>">
-                                                <select name="stage" onchange="this.form.submit()">
-                                                    <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
-                                                        <option value="<?= $stageOption ?>" <?= $deal['stage'] === $stageOption ? 'selected' : '' ?>><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                            </form>
-                                        </span>
-                                        <span><?= $deal['value'] ? '$' . number_format((float) $deal['value'], 2) : '—' ?></span>
-                                        <span><?= $deal['assigned_users'] ? e($deal['assigned_users']) : '—' ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php if (!$deals): ?>
-                                    <div class="table-row muted">No deals yet.</div>
-                                <?php endif; ?>
-                            </div>
+                            <a href="?view=deals_form" class="button with-icon">
+                                <span class="icon" aria-hidden="true">+</span>
+                                <span>Add Deal</span>
+                            </a>
                         </div>
-                        <div class="card">
-                            <h2>Add deal</h2>
-                            <form method="post" class="form-grid">
-                                <input type="hidden" name="action" value="add_deal">
-                                <label>
-                                    <span>Name</span>
-                                    <input type="text" name="name" required>
-                                </label>
-                                <label>
-                                    <span>Stage</span>
-                                    <select name="stage">
-                                        <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
-                                            <option value="<?= $stageOption ?>"><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <label>
-                                    <span>Value</span>
-                                    <input type="number" step="0.01" name="value">
-                                </label>
-                                <label>
-                                    <span>Expected close</span>
-                                    <input type="date" name="close_date">
-                                </label>
-                                <label>
-                                    <span>Company</span>
-                                    <select name="company_id">
-                                        <option value="">Unassigned</option>
-                                        <?php foreach ($companies as $company): ?>
-                                            <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <label>
-                                    <span>Primary contact</span>
-                                    <select name="contact_id">
-                                        <option value="">Unassigned</option>
-                                        <?php foreach ($contacts as $contact): ?>
-                                            <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <button type="submit">Create deal</button>
-                            </form>
+                        <div class="table">
+                            <div class="table-head">
+                                <span>Name</span>
+                                <span>Company</span>
+                                <span>Stage</span>
+                                <span>Value</span>
+                                <span>Assigned</span>
+                            </div>
+                            <?php foreach ($deals as $deal): ?>
+                                <div class="table-row">
+                                    <span><?= e($deal['name']) ?></span>
+                                    <span><?= e($deal['company_name'] ?? '—') ?></span>
+                                    <span>
+                                        <form method="post" class="inline-form">
+                                            <input type="hidden" name="action" value="update_deal_stage">
+                                            <input type="hidden" name="deal_id" value="<?= $deal['deal_id'] ?>">
+                                            <select name="stage" onchange="this.form.submit()">
+                                                <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
+                                                    <option value="<?= $stageOption ?>" <?= $deal['stage'] === $stageOption ? 'selected' : '' ?>><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </form>
+                                    </span>
+                                    <span><?= $deal['value'] ? '$' . number_format((float) $deal['value'], 2) : '—' ?></span>
+                                    <span><?= e($deal['assigned_users'] ?? 'Unassigned') ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!$deals): ?>
+                                <div class="table-row muted">No deals yet.</div>
+                            <?php endif; ?>
                         </div>
                     </section>
+                <?php elseif ($view === 'deals_form'): ?>
+                    <section class="card card-form">
+                        <a href="?view=deals" class="button ghost with-icon back-link">
+                            <span class="icon" aria-hidden="true">←</span>
+                            <span>Back to Deals</span>
+                        </a>
+                        <h2>Add Deal</h2>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_deal">
+                            <label>
+                                <span>Name</span>
+                                <input type="text" name="name" required>
+                            </label>
+                            <label>
+                                <span>Stage</span>
+                                <select name="stage">
+                                    <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
+                                        <option value="<?= $stageOption ?>"><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Value</span>
+                                <input type="number" step="0.01" name="value">
+                            </label>
+                            <label>
+                                <span>Expected close</span>
+                                <input type="date" name="close_date">
+                            </label>
+                            <label>
+                                <span>Company</span>
+                                <select name="company_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($companies as $company): ?>
+                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Primary contact</span>
+                                <select name="contact_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <button type="submit">Create deal</button>
+                        </form>
+                    </section>
                 <?php elseif ($view === 'activities'): ?>
-                    <section class="split">
-                        <div class="card">
+                    <section class="card">
+                        <div class="card-header">
                             <h2>Activities</h2>
-                            <div class="table">
-                                <div class="table-head">
-                                    <span>Type</span>
-                                    <span>Subject</span>
-                                    <span>Related to</span>
-                                    <span>Date</span>
-                                </div>
-                                <?php foreach ($activities as $activity): ?>
-                                    <div class="table-row">
-                                        <span class="pill"><?= e($activity['type']) ?></span>
-                                        <span><?= e($activity['subject'] ?? '—') ?></span>
-                                        <span>
-                                            <?php if ($activity['deal_name']): ?>
-                                                <?= e($activity['deal_name']) ?>
-                                            <?php elseif ($activity['first_name']): ?>
-                                                <?= e($activity['first_name'] . ' ' . $activity['last_name']) ?>
-                                            <?php else: ?>
-                                                —
-                                            <?php endif; ?>
-                                        </span>
-                                        <span><?= e(date('Y-m-d H:i', strtotime((string) $activity['activity_date']))) ?></span>
-                                    </div>
-                                <?php endforeach; ?>
-                                <?php if (!$activities): ?>
-                                    <div class="table-row muted">No activities yet.</div>
-                                <?php endif; ?>
+                            <a href="?view=activities_form" class="button with-icon">
+                                <span class="icon" aria-hidden="true">+</span>
+                                <span>Add Activity</span>
+                            </a>
+                        </div>
+                        <div class="table">
+                            <div class="table-head">
+                                <span>Type</span>
+                                <span>Subject</span>
+                                <span>Related to</span>
+                                <span>Date</span>
                             </div>
+                            <?php foreach ($activities as $activity): ?>
+                                <div class="table-row">
+                                    <span class="pill"><?= e($activity['type']) ?></span>
+                                    <span><?= e($activity['subject'] ?? '—') ?></span>
+                                    <span>
+                                        <?php if ($activity['deal_name']): ?>
+                                            <?= e($activity['deal_name']) ?>
+                                        <?php elseif ($activity['first_name']): ?>
+                                            <?= e($activity['first_name'] . ' ' . $activity['last_name']) ?>
+                                        <?php else: ?>
+                                            —
+                                        <?php endif; ?>
+                                    </span>
+                                    <span><?= e(date('Y-m-d H:i', strtotime((string) $activity['activity_date']))) ?></span>
+                                </div>
+                            <?php endforeach; ?>
+                            <?php if (!$activities): ?>
+                                <div class="table-row muted">No activities yet.</div>
+                            <?php endif; ?>
                         </div>
-                        <div class="card">
-                            <h2>Log activity</h2>
-                            <form method="post" class="form-grid">
-                                <input type="hidden" name="action" value="add_activity">
-                                <label>
-                                    <span>Type</span>
-                                    <select name="type">
-                                        <?php foreach (['call','email','meeting','note'] as $typeOption): ?>
-                                            <option value="<?= $typeOption ?>"><?= ucfirst($typeOption) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <label>
-                                    <span>Subject</span>
-                                    <input type="text" name="subject">
-                                </label>
-                                <label>
-                                    <span>Notes</span>
-                                    <textarea name="content" rows="4"></textarea>
-                                </label>
-                                <label>
-                                    <span>Deal</span>
-                                    <select name="deal_id">
-                                        <option value="">None</option>
-                                        <?php foreach ($deals as $deal): ?>
-                                            <option value="<?= $deal['deal_id'] ?>"><?= e($deal['name']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <label>
-                                    <span>Contact</span>
-                                    <select name="contact_id">
-                                        <option value="">None</option>
-                                        <?php foreach ($contacts as $contact): ?>
-                                            <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                </label>
-                                <label>
-                                    <span>Date</span>
-                                    <input type="datetime-local" name="activity_date">
-                                </label>
-                                <button type="submit">Log activity</button>
-                            </form>
-                        </div>
+                    </section>
+                <?php elseif ($view === 'activities_form'): ?>
+                    <section class="card card-form">
+                        <a href="?view=activities" class="button ghost with-icon back-link">
+                            <span class="icon" aria-hidden="true">←</span>
+                            <span>Back to Activities</span>
+                        </a>
+                        <h2>Add Activity</h2>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_activity">
+                            <label>
+                                <span>Type</span>
+                                <select name="type">
+                                    <?php foreach (['call','email','meeting','note'] as $typeOption): ?>
+                                        <option value="<?= $typeOption ?>"><?= ucfirst($typeOption) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Subject</span>
+                                <input type="text" name="subject">
+                            </label>
+                            <label>
+                                <span>Notes</span>
+                                <textarea name="content" rows="4"></textarea>
+                            </label>
+                            <label>
+                                <span>Deal</span>
+                                <select name="deal_id">
+                                    <option value="">None</option>
+                                    <?php foreach ($deals as $deal): ?>
+                                        <option value="<?= $deal['deal_id'] ?>"><?= e($deal['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Contact</span>
+                                <select name="contact_id">
+                                    <option value="">None</option>
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Date</span>
+                                <input type="datetime-local" name="activity_date">
+                            </label>
+                            <button type="submit">Log activity</button>
+                        </form>
                     </section>
                 <?php endif; ?>
             <?php endif; ?>
