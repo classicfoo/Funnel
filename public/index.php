@@ -371,7 +371,28 @@ if ($currentUser) {
                             <?php if (!$companies): ?>
                                 <div class="table-row muted">No companies yet.</div>
                             <?php endif; ?>
+
                         </div>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_company">
+                            <label>
+                                <span>Name</span>
+                                <input type="text" name="name" required>
+                            </label>
+                            <label>
+                                <span>Industry</span>
+                                <input type="text" name="industry">
+                            </label>
+                            <label>
+                                <span>Website</span>
+                                <input type="url" name="website">
+                            </label>
+                            <label>
+                                <span>Phone</span>
+                                <input type="text" name="phone">
+                            </label>
+                            <button type="submit">Create</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'companies_form'): ?>
                     <section class="card card-form">
@@ -429,6 +450,39 @@ if ($currentUser) {
                                 <div class="table-row muted">No contacts yet.</div>
                             <?php endif; ?>
                         </div>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_contact">
+                            <label>
+                                <span>First name</span>
+                                <input type="text" name="first_name" required>
+                            </label>
+                            <label>
+                                <span>Last name</span>
+                                <input type="text" name="last_name" required>
+                            </label>
+                            <label>
+                                <span>Email</span>
+                                <input type="email" name="email">
+                            </label>
+                            <label>
+                                <span>Phone</span>
+                                <input type="text" name="phone">
+                            </label>
+                            <label>
+                                <span>Position</span>
+                                <input type="text" name="position">
+                            </label>
+                            <label>
+                                <span>Company</span>
+                                <select name="company_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($companies as $company): ?>
+                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <button type="submit">Save</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'contacts_form'): ?>
                     <section class="card card-form">
@@ -511,6 +565,48 @@ if ($currentUser) {
                                 <div class="table-row muted">No deals yet.</div>
                             <?php endif; ?>
                         </div>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_deal">
+                            <label>
+                                <span>Name</span>
+                                <input type="text" name="name" required>
+                            </label>
+                            <label>
+                                <span>Stage</span>
+                                <select name="stage">
+                                    <?php foreach (['lead','qualified','proposal','negotiation','closed_won','closed_lost'] as $stageOption): ?>
+                                        <option value="<?= $stageOption ?>"><?= ucfirst(str_replace('_', ' ', $stageOption)) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Value</span>
+                                <input type="number" step="0.01" name="value">
+                            </label>
+                            <label>
+                                <span>Expected close</span>
+                                <input type="date" name="close_date">
+                            </label>
+                            <label>
+                                <span>Company</span>
+                                <select name="company_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($companies as $company): ?>
+                                        <option value="<?= $company['company_id'] ?>"><?= e($company['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Primary contact</span>
+                                <select name="contact_id">
+                                    <option value="">Unassigned</option>
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <button type="submit">Create deal</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'deals_form'): ?>
                     <section class="card card-form">
@@ -598,6 +694,48 @@ if ($currentUser) {
                                 <div class="table-row muted">No activities yet.</div>
                             <?php endif; ?>
                         </div>
+                        <form method="post" class="form-grid">
+                            <input type="hidden" name="action" value="add_activity">
+                            <label>
+                                <span>Type</span>
+                                <select name="type">
+                                    <?php foreach (['call','email','meeting','note'] as $typeOption): ?>
+                                        <option value="<?= $typeOption ?>"><?= ucfirst($typeOption) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Subject</span>
+                                <input type="text" name="subject">
+                            </label>
+                            <label>
+                                <span>Notes</span>
+                                <textarea name="content" rows="4"></textarea>
+                            </label>
+                            <label>
+                                <span>Deal</span>
+                                <select name="deal_id">
+                                    <option value="">None</option>
+                                    <?php foreach ($deals as $deal): ?>
+                                        <option value="<?= $deal['deal_id'] ?>"><?= e($deal['name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Contact</span>
+                                <select name="contact_id">
+                                    <option value="">None</option>
+                                    <?php foreach ($contacts as $contact): ?>
+                                        <option value="<?= $contact['contact_id'] ?>"><?= e($contact['first_name'] . ' ' . $contact['last_name']) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Date</span>
+                                <input type="datetime-local" name="activity_date">
+                            </label>
+                            <button type="submit">Log activity</button>
+                        </form>
                     </section>
                 <?php elseif ($view === 'activities_form'): ?>
                     <section class="card card-form">
