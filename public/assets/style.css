@@ -80,16 +80,6 @@ body {
     font-weight: 600;
 }
 
-.card-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.card-form h2 {
-    margin-bottom: 0.25rem;
-}
-
 .card-header {
     display: flex;
     align-items: center;
@@ -266,35 +256,16 @@ button:active {
     transform: translateY(1px);
 }
 
-.button.with-icon {
-    gap: 0.4rem;
-}
-
-.button.with-icon .icon {
-    font-size: 1.1rem;
-    line-height: 1;
-}
-
-.button.ghost {
+.button.secondary {
     background: transparent;
     color: var(--muted);
     border: 1px solid var(--border);
-    padding: 0.5rem 0.85rem;
 }
 
-.button.ghost:hover {
+.button.secondary:hover {
     color: var(--accent);
     border-color: var(--accent);
     background: var(--accent-soft);
-}
-
-.button.ghost:active {
-    transform: translateY(0);
-}
-
-.card-form .back-link {
-    align-self: flex-start;
-    margin-bottom: 0;
 }
 
 button.link {
